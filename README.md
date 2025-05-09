@@ -1,4 +1,4 @@
-# AWS Kubernetes Capstone Project#
+# AWS Kubernetes Capstone Project
 
 ## Description
 This Capstone project is build inside the EC2 instance (kube-capstone). It can be access via the aws console or using Github repo. Examples are used from class activities. 
@@ -52,7 +52,7 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * eksctl delete cluster -f cluster.yaml
 
 
-# Kubernetes Deployments
+## Kubernetes Deployments
 
 ## For events-api
 * cd out of ekscluster
@@ -114,7 +114,7 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 - Note keep this browser running
 
 
-# Locate the for loop in the app 
+## Locate the for loop in the app 
 * kubectl get pods
 * grab a pod name from the list then edit POD-NAME-HERE and run kubectl exec -i -t POD-NAME-HERE -- /bin/bash
 * ls
@@ -126,7 +126,7 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * exit
 
 
-# Autoscaling the App - Load test
+## Autoscaling the App - Load test
 
 Open 2 new sessions via EC2:
 - working session: use for loop, add the saved External IP for autoscale-app-svc: while true; do curl http://ac43dcff309ae4646b06914679c99c30-593099355.us-east-1.elb.amazonaws.com/; done;  
@@ -141,7 +141,7 @@ Open 2 new sessions via EC2:
 * kubectl get pods
 
 
-# Test updating your application with a blue/green update
+## Test updating your application with a blue/green update
 ## Rolling Updates (test)
 * cd ~/eventsapp/kubernetes-config/
 * nano web-deployment.yaml file edit replication to 4 
@@ -194,7 +194,6 @@ Open 2 new sessions via EC2:
 - For this project "events-web-v2.0” is stay acive
 
 
-
 ## Delete
 * kubectl delete deployment autoscale-app
 * kubectl delete hpa autoscale-app-hpa
@@ -214,9 +213,9 @@ Open 2 new sessions via EC2:
 
 
 
-# Part2:  Details on the process steps ##
+# Part 2:  Details on the process steps ##
 
-# Create and configure the deployment environment
+## Create and configure the deployment environment
  
 Create new t2.micro instance with exisitng AMI, security group with all SSH, HTTP and HTTPS rule allowed. [Access and Secrets key is based on eruser102 user key.]
 * Connect to the newly build server and run "aws configure" add the access and secrets key - use "aws sts get-caller-identity" to confirm access in the account.
@@ -251,7 +250,7 @@ re run following commands in both folders:
 Refresh and check the browser changes will be updated. CTRL+C in both sessions to exit.
 
 
-# Containerize your application and store it in a repository
+## Containerize your application and store it in a repository
 
 
 ## Create ECR repos
@@ -279,7 +278,7 @@ then ran above commands from $ docker build onwards and add :2.0 instead of :lat
 Also, create another version 3.0 to check everything is working fine. 
 
 
-# Deploy an EKS cluster
+## Deploy an EKS cluster
 
 Create cluster.yaml file
 * ls
@@ -316,7 +315,7 @@ Once the cluster is created, check kubectl cluster access to see everything is r
 
 
 
-# Deploy your web-based application, including the backend database
+## Deploy your web-based application, including the backend database
 
 
 ## Create yaml files (pre-created)
