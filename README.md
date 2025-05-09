@@ -1,18 +1,18 @@
-## AWS Kubernetes Capstone Project##
+# AWS Kubernetes Capstone Project#
 
-# Description
+## Description
 This Capstone project is build inside the EC2 instance (kube-capstone). It can be access via the aws console or using Github repo. Examples are used from class activities. 
 
 
-## Part 1:  Brief intoduction on the deployment ##
+# Part 1:  Brief intoduction on the deployment ##
 
-# For AWS Console access
+##  For AWS Console access
 * Log in to eruser102 account (can be provided)
 * Start kube-capstone EC2 instance and EC2 connect to the server
 * Run this command aws sts get-caller-identity to see if you have access key attached, (it should show, if not key will be provided)
 
 
-# Check installation
+##  Check installation
 * Kubernetes - type kubectl, then press RETURN to test.
 * eksctl - type eksctl, then press ENTER.
 * Docker - type docker, ENTER then "sudo systemctl enable docker" and "sudo systemctl start docker" to boot and start the service. (Docker hub is not used.)
@@ -21,13 +21,13 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * helm - type helm and then press ENTER. (installed but didn't use it)
 
 
-# ECR repo
+##  ECR repo
 * 2 repos should be active with its images. Below "Create ECR repos" section has more information.
 * There are 3 version of images in events-website. All the commands are on mentioned on part 2.
 * If there are any issue it must be that the ECR image is using either latest or 2.0 version.
 
 
-# Create eks cluster & nodes
+##  Create eks cluster & nodes
 * ls and cd into eksctlcluster
 * Run eks cluster using : eksctl create cluster -f cluster.yaml
 * Check AWS console -> EKS cluster -> "kc-cluster" will be created
@@ -36,14 +36,14 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * All resources will be created.
 
 
-# Run the commands 
+##  Run the commands 
 * kubectl cluster-info (info about Kubernetes control plane and CoreDNS )
 * kubectl get services (kubernetes ClusterIP)
 * kubectl get nodes ( 3 running nodes)
 * kubectl get pods (this won't show any results yet)
 
 
-# Useful commands for eks
+##  Useful commands for eks
 - To run the cluster
 * eksctl create cluster -f cluster.yaml in cd 
 - To update cluster
@@ -54,7 +54,7 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 
 # Kubernetes Deployments
 
-# For events-api
+## For events-api
 * cd out of ekscluster
 * cd ~/eventsapp/kubernetes-config
 * kubectl apply -f api-deployment.yaml
@@ -62,26 +62,26 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * kubectl get pods and kubectl describe pod (for the details)
 
 
-# For events-web
+## For events-web
 * be in kubernetes-config
 * kubectl apply -f web-deployment.yaml
 * kubectl get deployments (this will show both events)
 * kubectl get pods (3 pods will run as this pod has 2 replicas set) 
 
 
-# For ClusterIP 
+## For ClusterIP 
 * from kubernetes-config create: events-api-svc by kubectl apply -f api-service.yaml
 * kubectl get service -> events-api-svc, cluster-IP will be created
 
 
-# For Load Balancer
+## For Load Balancer
 * from kubernetes-config create: events-web-svc by using kubectl apply -f web-service.yaml
 * kubectl get service ( 3 service will run)
 * copy and paste the long EXTERNAL-IP: a062e8c70fae4403597ec3ccf0541222-1415513312.us-east-1.elb.amazonaws.com
 * this events app page
 
 
-# Modify replicas
+## Modify replicas
 * change replicas from 2 to 3 in web-deployment.yaml file to test the application
 * nano or vi web-deployment.yaml (to exit nano, cntrl o and cntrl x then enter) (vi -> :wq!)
 * kubectl apply -f web-deployment.yaml
@@ -92,7 +92,7 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * alternatively, you can delete this new pod using following: 
 * * ex: kubectl delete pod events-web-5d58474486-7s8k9
 
-# Adding Resource Requests, Limits and Autoscaling
+## Adding Resource Requests, Limits and Autoscaling
 * cd out of kubernetes-config
 * cd ~/eventsapp/HPA-demo/
 * run kubectl apply -f deployment.yaml to create autoscale-app from deployment.apps
@@ -100,18 +100,17 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * kubectl get pods ( 2 new pods will be running)
 * kubectl top pods (shows CPU and memory)
 
-# For horizontal pod autoscaler (HPA)
+## For horizontal pod autoscaler (HPA)
 * kubectl apply -f autoscale.yaml 
 * kubectl get hpa (shows target cpu 0% to 60%, min & max pods, replicas, etc. )
 * kubectl top pods
 * kubectl get service -> copy the external IP from 
 
-# For testing
+## For testing
 * cd ~/eventsapp/HPA-demo -> ls -> cat service.yaml to check the ports 80 and targetport 8080. 
 * kubectl apply -f service.yaml
 * kubectl get service
 * copy External IP for autoscale-app-svc and paste it in the browser which loads with demo app version 1.0 (can take some time to load)
-
 - Note keep this browser running
 
 
@@ -124,7 +123,6 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
    |for (var i = 1; i <= 4000000; i++) {
     |x += Math.tan(i*Math.random());
    |}
-
 * exit
 
 
@@ -137,7 +135,6 @@ Open 2 new sessions via EC2:
   * kubectl top pods
   * kubectl get pods
 - 3rd session run the while loop again
-
 - Use CTRL+C to stop loops in both windows. After a while the targets will come down to cpu: 0%/60%. Use above commands to check the status:
 * kubectl get hpa
 * kubectl top pods
@@ -145,13 +142,13 @@ Open 2 new sessions via EC2:
 
 
 # Test updating your application with a blue/green update
-# Rolling Updates (test)
+## Rolling Updates (test)
 * cd ~/eventsapp/kubernetes-config/
 * nano web-deployment.yaml file edit replication to 4 
 * run kubectl apply -f web-deployment.yaml (few will get terminated and new will be created)
 - reload the External IP browser to check if its still running. (events app browser)
 
-# Upgrade to Version 2.0
+## Upgrade to Version 2.0
 * cd ~/eventsapp/kubernetes-config/ -> nano web-deployment.yaml
 * modify the container image version from latest to 2.0 "URI: 441257995286.dkr.ecr.us-east-1.amazonaws.com/events-website:2.0"
 * check kubectl get pods to see new running pods
@@ -160,7 +157,7 @@ Open 2 new sessions via EC2:
 * kubectl rollout undo deployments/events-web (on the main server windor to undo the deployment)
 * change the version back to latest in web-deployment.yaml then apply kubectl apply -f web-deployment.yaml
 
-# Blue/Green Deployments
+## Blue/Green Deployments
 * cd ~/eventsapp/kubernetes-config/
 * cp web-deployment.yaml web-deployment-v2.yaml
 * nano web-deployment-v2.yaml file edit from “name: events-web” to “name: events-web-v2.0”
@@ -170,36 +167,35 @@ Open 2 new sessions via EC2:
 * kubectl get deployments
 * kubectl get pods
 
-# Switch the Load Balancer Labels
+## Switch the Load Balancer Labels
 * edit the web-service.yaml
 * in the selector, change “ver: v1.0” to “ver: v2.0”
 * kubectl apply -f web-service.yaml
 * reload the app in External IP browser until you see Version 2.0
 
-# Rollback
+## Rollback
 * edit the web-service.yaml
 * in the selector, change “ver: v2.0” to “ver: v1.0”
 * kubectl apply -f web-service.yam
 * reload the app in External IP browser until you see no Version on the heading. 
 
-# Canary Release
+## Canary Release
 * edit web-deployment-v2.yaml file, replicas from 4 to 1
 * apply kubectl apply -f web-deployment-v2.yaml file
 * nano web-service.yaml remove “ver: v1.0” line from selector (this will cause the load balancer to select all pods not matter the version)
 * kubectl apply -f web-service.yaml
 
-# Testing the Canary Release
+## Testing the Canary Release
 * 4 copies of version 1.0 will load and only 1 copy of version 2.0 will load. Will need to refresh page couple of times.
 * Or run the script with External IP link: while true; do curl http://EXTERNAL-IP/ | grep -i "version 2.0" && sleep 1; done; (Whenever “version 2.0” is found, it will be displayed)
 * ctrl C to stop the script.
 * nano web-service.yaml and add the “ver: v1.0” line back and apply kubectl apply -f web-service.yaml
 * set the replicas to 2 in web-deployment.yaml file run kubectl apply command
-
 - For this project "events-web-v2.0” is stay acive
 
 
 
-# Delete
+## Delete
 * kubectl delete deployment autoscale-app
 * kubectl delete hpa autoscale-app-hpa
 * kubectl delete service autoscale-app-svc
@@ -218,19 +214,15 @@ Open 2 new sessions via EC2:
 
 
 
+# Part2:  Details on the process steps ##
 
-
-## Part2:  Details on the process steps ##
-
-## Create and configure the deployment environment
-
-# Processes 
+# Create and configure the deployment environment
+ 
 Create new t2.micro instance with exisitng AMI, security group with all SSH, HTTP and HTTPS rule allowed. [Access and Secrets key is based on eruser102 user key.]
-
 * Connect to the newly build server and run "aws configure" add the access and secrets key - use "aws sts get-caller-identity" to confirm access in the account.
 
 
-# Practice test
+## Practice test
 Check the ports:
 Under EC2, check security group -> enable TCP protocols
 * Port - 8082 
@@ -259,17 +251,17 @@ re run following commands in both folders:
 Refresh and check the browser changes will be updated. CTRL+C in both sessions to exit.
 
 
-## Containerize your application and store it in a repository
+# Containerize your application and store it in a repository
 
 
-# Create ECR repos
+## Create ECR repos
 
 Create 2 mutebale repositories in ECR - Elastic Container Registry with encryption type as AES-256
 * events-api
 * events-website
 Grab the URI image for both repos.
 
-# Push images 
+## Push images 
 
 Use the commands to login and build and push the image to the registry. Edit URI for events-api folder:
 * docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 441257995286.dkr.ecr.us-east-1.amazonaws.com/events-website
@@ -277,7 +269,7 @@ Use the commands to login and build and push the image to the registry. Edit URI
 * ocker tag events-api:latest 441257995286.dkr.ecr.us-east-1.amazonaws.com/events-website
 * docker push 441257995286.dkr.ecr.us-east-1.amazonaws.com/events-website:latest
 
-# Create another version
+## Create another version
 
 Edit /eventsapp/events-website/views/layouts/default.hbs by adding **Version 2.0** with in <h1><your name> Events App **Version 2.0**</h1>
 then ran above commands from $ docker build onwards and add :2.0 instead of :latest.
@@ -287,7 +279,7 @@ then ran above commands from $ docker build onwards and add :2.0 instead of :lat
 Also, create another version 3.0 to check everything is working fine. 
 
 
-## Deploy an EKS cluster
+# Deploy an EKS cluster
 
 Create cluster.yaml file
 * ls
@@ -324,10 +316,10 @@ Once the cluster is created, check kubectl cluster access to see everything is r
 
 
 
-## Deploy your web-based application, including the backend database
+# Deploy your web-based application, including the backend database
 
 
-# Create yaml files (pre-created)
+## Create yaml files (pre-created)
 
 * cd eventsapp 
 * mkdir kubernetes-config 
@@ -359,7 +351,7 @@ spec:
        ports:
        - containerPort: 8082
 
-# Create pods
+## Create pods
 
 * kubectl apply -f api-deployment.yaml and kubectl apply -f web-deployment.yaml 
 
@@ -377,13 +369,13 @@ Investigate ReplicaSets
 You can check the progress in EKS cluster.
 
 
-# Create a ClusterIP and Load Balancer
+## Create a ClusterIP and Load Balancer
 
 * check the deployments are running
 * kubectl get deploy
 
 
-# Create api-service.yaml file
+## Create api-service.yaml file
 
 * cd ~/eventsapp/kubernetes-config
 * touch api-service.yaml
@@ -407,7 +399,7 @@ spec:
  type: ClusterIP
 
 
-# Modify web-deployment.yaml with following environment variable (SERVER)
+## Modify web-deployment.yaml with following environment variable (SERVER)
 
 env:
 - name: SERVER
