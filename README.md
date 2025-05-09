@@ -1,10 +1,10 @@
 # AWS Kubernetes Capstone Project
 
 ## Description
-This Capstone project is build inside the EC2 instance (kube-capstone). It can be access via the aws console or using Github repo. Examples are used from class activities. 
+This Capstone project is build inside the EC2 instance (kube-capstone). It can be access via the aws console or using Github repo. Examples are used from class activities, part 2 has process of how the resources were created.  
 
 
-# Part 1:  Brief intoduction on the deployment ##
+# Part 1:  Deployment Server 
 
 ##  For AWS Console access
 * Log in to eruser102 account (can be provided)
@@ -135,7 +135,7 @@ Open 2 new sessions via EC2:
   * kubectl top pods
   * kubectl get pods
 - 3rd session run the while loop again
-- Use CTRL+C to stop loops in both windows. After a while the targets will come down to cpu: 0%/60%. Use above commands to check the status:
+- Use CTRL+C to stop loops in both windows. After a while the targets will come down to cpu: 0% - 60%. Use above commands to check the status:
 * kubectl get hpa
 * kubectl top pods
 * kubectl get pods
@@ -203,12 +203,12 @@ Open 2 new sessions via EC2:
 * kubectl delete service events-web-svc 
 * kubectl delete service kubernetes 
 * kubectl get pods
-* kubectl delete pods <Pod name>
+* kubectl delete pod (namespace)
 
-- For EKSCluster 
-* eksctl delete cluster -f cluster.yaml
-* stop Ec2 instance 
-
+* For deleting main cluster - cd ~/ekscluster
+  * eksctl delete cluster -f cluster.yaml
+  * will terminated all the remaining infra along with 3 nodes
+  * lastly stop Ec2 instance 
 
 
 
