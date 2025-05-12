@@ -193,6 +193,14 @@ Open 2 new sessions via EC2:
 * set the replicas to 2 in web-deployment.yaml file run kubectl apply command
 - For this project "events-web-v2.0” is stay acive
 
+## Deploying StatefulSets
+* cd ~/eventsapp/statefulset-demo/
+* kubectl apply -f statefulset-demo.yaml
+* kubectl get pods
+* kubectl get pvc
+* can take several minutes to load the demo, you can also check in the AWS console under EKS cluster resources -> StatefulSets
+* tried to create v2 but it failed as well (this didn't work for me so I didn't complete)
+
 
 ## Delete
 * kubectl delete deployment autoscale-app
