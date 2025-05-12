@@ -18,7 +18,8 @@ This Capstone project is build inside the EC2 instance (kube-capstone). It can b
 * Docker - type docker, ENTER then "sudo systemctl enable docker" and "sudo systemctl start docker" to boot and start the service. (Docker hub is not used.)
 * git - type git and then press ENTER.
 * node - type npm and then press ENTER.
-* helm - type helm and then press ENTER. (installed but didn't use it)
+* helm - type helm and then press ENTER. (but only for practice)
+* Mariadb - installed but only used for practice 
 
 
 ##  ECR repo
@@ -193,13 +194,18 @@ Open 2 new sessions via EC2:
 * set the replicas to 2 in web-deployment.yaml file run kubectl apply command
 - For this project "events-web-v2.0” is stay acive
 
-## Deploying StatefulSets
+## Deploying StatefulSets (incomplete) 
 * cd ~/eventsapp/statefulset-demo/
 * kubectl apply -f statefulset-demo.yaml
 * kubectl get pods
 * kubectl get pvc
 * can take several minutes to load the demo, you can also check in the AWS console under EKS cluster resources -> StatefulSets
 * tried to create v2 but it failed as well (this didn't work for me so I didn't complete)
+
+## Running Kubernetes Jobs (incomplete)
+* cd eventsapp/database-initializer
+* new repo was created for the job using docker build, cronjob.yaml file was created and deleted using kubectl apply -f cronjob.yaml and kubectl delete cronjob hello
+* api-deployment.yaml has been edited, kubectl apply -f api-deployment.yaml
 
 
 ## Delete
