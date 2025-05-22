@@ -1,5 +1,6 @@
 # AWS Kubernetes Capstone Project
 
+
 ## Description
 This Capstone project is build inside the EC2 instance (kube-capstone). It can be access via the aws console or using Github repo. Examples are used from class activities, part 2 has process of how the resources were created.  
 
